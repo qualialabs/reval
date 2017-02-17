@@ -12,7 +12,7 @@ This is a dev-only package so you don't have to worry about it being deployed to
 
 Visit `localhost:3000/reval/edit?filePath=/path/to/some/file.html|js|css`. This will load the file into Ace (an in-browser code editor). Typing `CMD+s` will reload the file in your browser and `CMD+S` will save your changes to disk.
 
-This mode is primarily for testing `qualia:reval`, although you could use it for development if you want. A better way of using `qualia:reval` is via an editor plugin. Currently there are plugins for Sublime Text and Spacemacs (not currently online yet), but it is extremely simple to write new plugins; just `POST` the text of the file you want to reload to `localhost:3000/reval/reload?filePath=/path/to/some/file.html|js|css`.
+This mode is primarily for testing `qualia:reval`, although you could use it for development if you want. A better way of using `qualia:reval` is via an editor plugin. Currently there are plugins for Sublime Text and Spacemacs (not currently online yet), but it is extremely simple to write new plugins; just `POST` the text of the file you want to reload to `localhost:3000/reload/reval?filePath=/path/to/some/file.html|js|css`.
 
 ## Caveats
 
