@@ -1,6 +1,6 @@
 Package.describe({
   name: 'qualia:reval',
-  version: '0.0.1',
+  version: '0.0.2',
   summary: 'Instant Meteor reloads',
   git: 'https://github.com/qualialabs/reval',
   documentation: 'README.md',
@@ -8,6 +8,8 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
+  api.versionsFrom('METEOR@1.4');
+
   api.use([
     'ecmascript',
     'underscore',
