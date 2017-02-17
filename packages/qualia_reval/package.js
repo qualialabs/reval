@@ -1,6 +1,6 @@
 Package.describe({
   name: 'qualia:reval',
-  version: '0.0.3',
+  version: '0.0.4',
   summary: 'Instant Meteor reloads',
   git: 'https://github.com/qualialabs/reval',
   documentation: 'README.md',
