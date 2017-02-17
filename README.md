@@ -1,5 +1,7 @@
 # qualia:reval - Instant Meteor reloads
 
+Demo Video: https://www.youtube.com/watch?v=t18GPNZ7_Xg
+
 This package allows you to instantly reload files in the browser. We've only tested that Blaze HTML/JS/CSS files work well, but any code that can be reloaded by being eval'ed on the client should work. At some point in the future, support for:
   - server side reloading
   - a wider variety of file types will be added (React templates, meteor methods, meteor publications, etc.)
