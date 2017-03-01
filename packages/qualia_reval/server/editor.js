@@ -15,6 +15,8 @@ Picker.route('/reval/edit', function(params, request, response) {
     else {
       filePath = path.resolve(rootDir, filePath);
     }
+    const isWin = /^win/.test(process.platform);
+    if (isWin) filePath = filePath.replace(/\\/g,"/");
   }
 
   let extension = filePath
