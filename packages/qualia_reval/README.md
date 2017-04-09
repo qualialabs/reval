@@ -4,6 +4,8 @@ This package allows you to instantly reload files in the browser. It works with 
 
 This is a dev-only package so you don't have to worry about it being deployed to prod.
 
+Right now only Chrome on OSX/Linux is officially supported. It could definitely be made to work on other browsers & OS's but I haven't made any effort to do that right now.
+
 ## Installing
 
 `meteor add qualia:reval`
