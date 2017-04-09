@@ -1,0 +1,31 @@
+<template name="revalUI">
+  <style type="text/css">{{ $tpl.bodyCSS }}</style>
+
+  <revalUI id="editor">
+    <iframe></iframe>
+    <revalPanel>
+      <revalTopbar>
+        <editPatch>{{ $tpl.hoverTemplate.get }}</editPatch>
+        {{#if $tpl.editorLive.get }}
+          <toggleLive style="background-color: #4CAF50;">Reloading Live</toggleLive>
+        {{else}}
+          <toggleLive style="background-color: #eded1a;">Reloading On Save</toggleLive>
+        {{/if}}
+      </revalTopbar>
+      <table>
+        <thead>
+          <th>Patch</th>
+          <th>Actions</th>
+        </thead>
+        <tbody>
+          {{#each patch in $tpl.getPatches}}
+          <tr data-index="{{ @index }}">
+            <td style="text-align: left">{{ patch.path }}</td>
+            <td><savePatch>Save</savePatch> <editPatch>Edit</editPatch> <clearPatch>Clear</clearPatch></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </revalPanel>
+  </revalUI>
+</template>
