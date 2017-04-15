@@ -1,0 +1,75 @@
+<html lang="en">
+  <head>
+    <title>{{filePath}}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="{{cdnURL}}/vs//loader.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      require.config({
+        paths: {
+          vs: '{{cdnURL}}/vs'
+        },
+      });
+
+      window.MonacoEnvironment = {
+        getWorkerUrl: function(workerId, label) {
+          return 'worker-proxy.js';
+        }
+      };
+
+      require(["vs/editor/editor.main"], function () {
+        let editor = monaco.editor.create(document.getElementById("container"), {
+          value: atob('{{safeCode}}'),
+          language: '{{mode}}',
+          theme: "vs-dark",
+        });
+
+        editor.onKeyUp(_.debounce(function() {
+          if (localStorage.getItem('Reval.Live') !== 'false') {
+            var code = editor.getValue();
+            $.ajax({
+              type: "POST",
+              url: '/reval/reload?filePath={{filePath}}',
+              data: code,
+            });
+          }
+        }, 100, true));
+
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function() {
+          var code = editor.getValue();
+          $.ajax({
+            type: "POST",
+            url: '/reval/reload?filePath={{filePath}}',
+            data: code,
+          });
+        });
+
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_S, function() {
+          var code = editor.getValue();
+          $.ajax({
+            type: "POST",
+            url: '/reval/reload?filePath={{filePath}}',
+            data: code,
+          });
+          $.ajax({
+            type: "POST",
+            url: '/reval/save',
+          });
+        });
+
+        // window.bindKeyDown = function(f) {
+        //   editor.onKeyDown(e => {
+        //     e.keyCode
+        //     f(e, monaco.KeyCode);
+        //   });
+        // };
+
+        window.addEventListener("resize", function(){ editor.layout(); });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
+  </body>
+</html>

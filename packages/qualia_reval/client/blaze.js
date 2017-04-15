@@ -27,10 +27,10 @@ let getRoot = function(elem) {
   return view;
 };
 
-let getRoots = function() {
+let getRoots = function(base) {
   let roots = new Set();
 
-  $('*').each((i, e) => {
+  $(base + ' *').each((i, e) => {
     let root = getRoot(e);
     if (root) {
       roots.add(root);
@@ -40,8 +40,8 @@ let getRoots = function() {
   return Array.from(roots);
 };
 
-let reloadPage = function() {
-  getRoots().forEach(view => view.rerender());
+let reloadPage = function(base='body') {
+  getRoots(base).forEach(view => view.rerender());
 };
 
 export {reloadPage};
