@@ -1,3 +1,5 @@
+import {ReactiveVar} from 'meteor/reactive-var';
+
 Template.revalUI.onCreated(function() {
   let tpl = this;
 
