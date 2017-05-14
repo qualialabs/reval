@@ -1,6 +1,10 @@
 # qualia:reval - Instant Meteor reloads
 
-This package allows you to instantly reload files in the browser. It works with Blaze, Jade, CSS, and arbitrary Javascript, both client-side and server-side. It also allows for live, collaborative code editing via an integration with (Ngrok)[https://ngrok.com].
+This package allows you to instantly reload files in the browser. It works with Blaze, Jade, CSS, and arbitrary Javascript, both client-side and server-side. It also allows for live, collaborative code editing via an integration with [Ngrok](https://ngrok.com).
+
+![image](https://cloud.githubusercontent.com/assets/247408/26030584/59575586-380c-11e7-94ec-11f7769b197a.png) 
+
+The above screenshot was taken by opening the in-browser Reval editor inside the excellent open-source [Reaction Commerce](https://github.com/reactioncommerce/reaction) project.
 
 This is a dev-only package so you don't have to worry about it being deployed to prod. However, deploying Reval to prod has certainly crossed my mind... hotfixing a bug in 30 seconds without reloading a user's browser would be pretty badass.
 
