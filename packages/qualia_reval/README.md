@@ -1,6 +1,6 @@
 # qualia:reval - Instant Meteor reloads
 
-This package allows you to instantly reload files in the browser. It works with Blaze, Jade, CSS, and arbitrary Javascript, both client-side and server-side. It also allows for live, collaborative code editing via an integration with [Ngrok](https://ngrok.com).
+This package allows you to instantly reload files, via either an in-browser editor or an editor plugin. It works with Blaze, Jade, CSS, and arbitrary Javascript, both client-side and server-side. It also allows for live, collaborative code editing via an integration with [Ngrok](https://ngrok.com).
 
 ![image](https://cloud.githubusercontent.com/assets/247408/26030584/59575586-380c-11e7-94ec-11f7769b197a.png) 
 
