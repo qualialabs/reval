@@ -6,6 +6,8 @@
 
     <script src="{{cdnURL}}/vs//loader.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+      window.revalFilePath = '{{filePath}}';
+
       require.config({
         paths: {
           vs: '{{cdnURL}}/vs'
@@ -25,7 +27,7 @@
           theme: "vs-dark",
         });
 
-        editor.onKeyUp(_.debounce(function() {
+        editor.onKeyUp(_.throttle(function() {
           if (localStorage.getItem('Reval.Live') !== 'false') {
             var code = editor.getValue();
             $.ajax({
@@ -34,7 +36,7 @@
               data: code,
             });
           }
-        }, 100, true));
+        }, 200));
 
         editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function() {
           var code = editor.getValue();

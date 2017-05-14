@@ -40,3 +40,8 @@ Picker.route('/reval/clear', function(params, request, response) {
   response.statusCode = 200;
   response.end();
 });
+
+Picker.route('/reval/publish', function(params, request, response) {
+  response.statusCode = 200;
+  response.end(Reval.publish());
+});

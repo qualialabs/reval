@@ -4,11 +4,14 @@ import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import Plugins from './plugins/plugins.js';
 import Utils from './utils.js';
+import Ngrok from './ngrok.js';
 
 export default {
 
   initialize() {
     this.prepareCollection();
+    this.ngrok = new Ngrok();
+
     return this;
   },
 
@@ -38,6 +41,12 @@ export default {
         this.onReload();
       },
     });
+  },
+
+  publish() {
+    this.ngrok.start();
+    this.ngrok.waitHealthy();
+    return this.ngrok.getPublicURL();
   },
 
   onReload() {
@@ -102,13 +111,14 @@ export default {
 
     files.forEach(file => {
       if (fs.existsSync(file.path)) {
-        savedFiles.push(file.path);
         fs.writeFileSync(file.path, file.code);
+
+        savedFiles.push(file.path);
+        this.revalFiles.remove(file._id);
       }
     });
 
     this.hooks['save'].forEach(callback => callback(files));
-    this.revalFiles.remove({});
 
     if (savedFiles.length > 0) {
       console.log(`\n\x1b[32mReval\x1b[0m saving patches:`);
@@ -128,15 +138,26 @@ export default {
     }
 
     files.forEach(file => {
+      clearedFiles.push(file.path);
+
       if (fs.existsSync(file.path)) {
-        clearedFiles.push(file.path);
-        this.reval(file.path, fs.readFileSync(file.path, 'utf8'), true);
+        try {
+          this.reval(file.path, fs.readFileSync(file.path, 'utf8'), true);
+        }
+        catch(e) {
+          console.error(e.stack);
+        }
       }
+
       this.revalFiles.update({ path: file.path }, {
         $set: {
           cleared: true,
         },
       });
+
+      Meteor.setTimeout(() => {
+        this.revalFiles.remove({ cleared: true, path: file.path });
+      }, 5000);
     });
 
     if (clearedFiles.length > 0) {
@@ -147,9 +168,9 @@ export default {
   },
 
   reval(filePath, code, silent=false) {
-    let modified = new Date();
     filePath = Utils.resolvePath(filePath);
 
+    let modified = Utils.getSafeModified(filePath);
     if (this.revalFiles.find({ path: filePath }).count() > 0) {
       this.revalFiles.update({ path: filePath }, {$set:{ code, modified }});
     }

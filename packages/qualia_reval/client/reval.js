@@ -11,6 +11,8 @@ Reval = {
     this.revalFiles = new Mongo.Collection('reval_files');
     Meteor.subscribe('revalFiles');
 
+    this.reloadPage = _.throttle(reloadPage, 1000);
+
     this.watchCode();
     this.renderUI();
 
@@ -38,6 +40,12 @@ Reval = {
     $.post('/reval/clear', JSON.stringify(files));
   },
 
+  publish() {
+    return new Promise(resolve => {
+      $.get('/reval/publish', url => resolve(url));
+    });
+  },
+
   watchCode() {
     let reload = revalFile => {
       if (revalFile.client) {
@@ -52,7 +60,7 @@ Reval = {
             ? 'html'
             : 'body'
         ;
-        reloadPage(baseElem);
+        this.reloadPage(baseElem);
       }
     };
 

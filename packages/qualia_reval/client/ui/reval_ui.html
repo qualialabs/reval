@@ -1,27 +1,54 @@
 <template name="revalUI">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
   <style type="text/css">{{ $tpl.bodyCSS }}</style>
 
   <revalUI id="editor">
-    <iframe></iframe>
+    <revalCode style="{{ $tpl.maybeHideCode }}">
+      <revalCodeTopbar>
+        <codePath>{{ $tpl.getFileName }}</codePath>
+        <codeTabs>
+          <codeTab data-extension="html">HTML</codeTab>
+          <codeTab data-extension="js">JS</codeTab>
+          <codeTab data-extension="css">CSS</codeTab>
+        </codeTabs>
+        <toggleLive>
+          {{#if $tpl.editorLive.get }}
+            Live
+          {{else}}
+            On Save
+          {{/if}}
+        </toggleLive>
+      </revalCodeTopbar>
+      <iframe ></iframe>
+    </revalCode>
+
+    {{#if $tpl.maybeHideCode }}
+      {{#if $tpl.inspectMode.get }}
+        <editorPlaceholder>{{ $tpl.hoverTemplate.get }}</editorPlaceholder>
+      {{else}}
+        <editorPlaceholder>{{ $tpl.getMessage }}</editorPlaceholder>
+      {{/if}}
+    {{/if}}
+
     <revalPanel>
-      <revalTopbar>
-        <editPatch>{{ $tpl.hoverTemplate.get }}</editPatch>
-        {{#if $tpl.editorLive.get }}
-          <toggleLive style="background-color: #4CAF50;">Reloading Live</toggleLive>
-        {{else}}
-          <toggleLive style="background-color: #eded1a;">Reloading On Save</toggleLive>
-        {{/if}}
-      </revalTopbar>
+      <revalPanelHeader>
+        <revalPublish>Publish</revalPublish>
+        <revalPanelTitle>Active Patches</revalPanelTitle>
+        <revalPanelSearch>
+          <input list="revalTemplates" placeholder="Find a template...">
+          <datalist id="revalTemplates">
+            {{#each template in $tpl.getTemplates}}
+              <option value="{{ template }}"></option>
+            {{/each}}
+          </datalist>
+        </revalPanelSearch>
+      </revalPanelHeader>
       <table>
-        <thead>
-          <th>Patch</th>
-          <th>Actions</th>
-        </thead>
         <tbody>
           {{#each patch in $tpl.getPatches}}
           <tr data-index="{{ @index }}">
-            <td style="text-align: left">{{ patch.path }}</td>
-            <td><savePatch>Save</savePatch> <editPatch>Edit</editPatch> <clearPatch>Clear</clearPatch></td>
+            <td style="text-align: left">{{ $tpl.truncatePath patch.path 3 }}</td>
+            <td><savePatch>Save</savePatch> <clearPatch>Clear</clearPatch></td>
           </tr>
           {{/each}}
         </tbody>

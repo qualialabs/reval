@@ -16,8 +16,8 @@ export default {
     let extension = filePath.split('.').pop();
 
     this.plugins.forEach(plugin => {
-      let hasExtension = plugin.extensions.includes(extension),
-          hasLocation = plugin.locations.includes(location);
+      let hasExtension = _.include(plugin.extensions, extension),
+          hasLocation = _.include(plugin.locations, location);
       if (!hasExtension || !hasLocation) {
         return;
       }

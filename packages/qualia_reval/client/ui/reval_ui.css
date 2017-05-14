@@ -1,47 +1,129 @@
 revalUI {
+    /* all: initial; */
+    * {
+        all: unset;
+    }
+    all: unset;
+}
+
+revalUI {
     position: absolute;
     width: 100%;
     height: 100%;
     font-family: Lato;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(34, 117, 79, 0.5)), url(/packages/qualia_reval/assets/blue-polygons.jpg);
+    font-size: 14px;
+}
+
+toggleReval {
+    position: fixed;
+    bottom: 5px;
+    right: 15px;
+    z-index: 10000;
+    opacity: .2;
+    cursor: pointer;
+}
+
+toggleReval:hover {
+    opacity: .8;
+}
+
+revalUI revalCode {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 50%;
+    height: 100%;
+    border-style: none;
+    opacity: 0.7;
 }
 
 revalUI iframe {
+    width: 100%;
+    height: 100%;
+    border-style: none;
+}
+
+revalUI editorPlaceholder {
+    display: flex;
     width: 50%;
     height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    white-space: pre;
+    color: white;
+    font-size: 2em;
 }
 
 revalUI revalPanel {
-    background: white;
     position: absolute;
     right: 0px;
     bottom: 0px;
     width: 50%;
     height: 50%;
     overflow: auto;
-    border-top: 1px solid #ccc;
+    border-style: none;
+    color: white;
 }
 
-revalUI table {
+revalUI revalPanelHeader {
+    display: flex;
+    align-items: center;
+    height: 2em;
+    background-color: rgba(0, 0, 130, 0.1);
+}
+
+revalUI revalPanelHeader revalPublish {
+    background-color: #1a5fce;
+}
+
+revalUI revalPanelHeader revalPanelTitle {
+    flex: 1;
+    text-align: center;
+}
+
+revalUI revalPanelHeader revalPanelSearch {
+    text-align: right;
+    margin-right: 0.5em;
+    opacity: 0.8;
+}
+
+revalUI revalPanelHeader input {
+    color: black;
+}
+
+revalUI revalPanelHeader revalPanelSearch datalist {
+    display: none;
+}
+
+revalUI revalPanel table {
     border-collapse: collapse;
     width: 100%;
-    border-top: 1px solid #ccc;
+}
+revalUI revalPanel table td:last-child {
+    white-space: nowrap;
 }
 
-revalUI thead {
-    background: linear-gradient(to bottom, #fff 0, #f0f0f0 100%);
+revalUI revalPanel tbody {
+    background: rgba(0, 0, 0, 0);
 }
 
-revalUI th, revalUI td {
+revalUI revalPanel th, revalUI revalPanel td {
     padding: 8px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    border-style: none;
 }
 
-revalUI tr:hover {
-    background-color: #f5f5f5;
+revalUI revalPanel tr {
+    background-color: rgba(142, 165, 131, 0.16);
 }
 
-revalUI toggleLive, savePatch, revalUI editPatch, revalUI clearPatch {
+revalUI revalPanel tr:hover {
+    background-color: rgba(142, 165, 131, 0.36);
+}
+
+revalUI savePatch, revalUI clearPatch, revalUI revalPublish {
     border: none;
     color: white;
     padding: 4px 16px;
@@ -53,18 +135,61 @@ revalUI toggleLive, savePatch, revalUI editPatch, revalUI clearPatch {
     cursor: pointer;
 }
 
-revalUI toggleLive {
-    float: right;
-}
-
 revalUI savePatch {
-    background-color: #4CAF50;
-}
-
-revalUI editPatch {
-    background-color: #4286f4;
+    background-color: #2e8631;
 }
 
 revalUI clearPatch {
-    background-color: #f44336;
+    background-color: #be2c21;
+}
+
+revalUI revalCodeTopbar {
+    display: flex;
+}
+
+revalUI codePath {
+    text-align: left;
+    border: none;
+    color: white;
+    padding: 4px 16px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0px 0px;
+}
+
+revalUI codeTabs {
+    flex: 1;
+    text-align: center;
+}
+
+revalUI codeTab {
+    border: none;
+    color: white;
+    padding: 4px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0px 0px;
+    cursor: pointer;
+}
+
+revalUI codeTab:hover {
+    background-color: rgba(142, 165, 131, 0.36);
+}
+
+revalUI toggleLive {
+    text-align: right;
+    border: none;
+    color: white;
+    padding: 4px 16px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0px 0px;
+}
+
+revalUI toggleLive:hover {
+    background-color: rgba(142, 165, 131, 0.36);
 }

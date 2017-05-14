@@ -122,4 +122,20 @@ export default {
     return payload;
   },
 
+  getSafeModified(filePath) {
+    let modified = new Date();
+    if (!fs.existsSync(filePath)) {
+      return modified;
+    }
+
+    let stats = fs.statSync(filePath),
+        fileModified = new Date(stats.mtime.getTime() + 1000)
+    ;
+
+    return modified > fileModified
+      ? modified
+      : fileModified
+    ;
+  }
+
 };
