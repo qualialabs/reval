@@ -25,13 +25,15 @@ let parsePath = function(filePath) {
 
   let packageJSPath = rootDir + path.sep + relativePath.split(path.sep).slice(0, 2).join(path.sep) + path.sep + 'package.js',
       packageJS = fs.readFileSync(packageJSPath, 'utf8'),
-      packageName = packageJS.match(/name\s*:\s*['"](.*?)['"]/)[1].replace(':', '_'),
-      clientPath = path.join(buildPrefix, 'web.browser', 'packages', packageName + '.js'),
-      serverPath = path.join(buildPrefix, 'server', 'packages', packageName + '.js'),
+      packageName = packageJS.match(/name\s*:\s*['"](.*?)['"]/)[1],
+      escapedPackageName = packageName.replace(':', '_'),
+      clientPath = path.join(buildPrefix, 'web.browser', 'packages', escapedPackageName + '.js'),
+      serverPath = path.join(buildPrefix, 'server', 'packages', escapedPackageName + '.js'),
       parsed = {}
   ;
 
-  parsed.relativePath = 'packages' + path.sep + packageName + path.sep + relativePath.split(path.sep).slice(2).join(path.sep);
+  parsed.relativePath = packageName + path.sep + relativePath.split(path.sep).slice(2).join(path.sep);
+  parsed.escapedRelativePath = parsed.relativePath.replace(':', '_');
 
   if (fs.existsSync(clientPath)) {
     parsed.clientPath = clientPath;
@@ -73,14 +75,15 @@ export default {
         locations = {}
     ;
 
+    console.log(parsed);
     if (parsed.clientPath && fs.existsSync(parsed.clientPath)) {
       let clientSrc = fs.readFileSync(parsed.clientPath, 'utf8');
-      locations.client = clientSrc.includes(parsed.relativePath);
+      locations.client = clientSrc.includes(parsed.relativePath) || clientSrc.includes(parsed.escapedRelativePath);
     }
 
     if (parsed.serverPath && fs.existsSync(parsed.serverPath)) {
       let serverSrc = fs.readFileSync(parsed.serverPath, 'utf8');
-      locations.server = serverSrc.includes(parsed.relativePath);
+      locations.server = serverSrc.includes(parsed.relativePath) || serverSrc.includes(parsed.escapedRelativePath);
     }
 
     return locations;
@@ -136,6 +139,19 @@ export default {
       ? modified
       : fileModified
     ;
-  }
+  },
+
+  getModuleName(filePath) {
+    let moduleName = filePath
+        .replace(rootDir + path.sep, '')
+        .replace('_', ':')
+    ;
+
+    if (moduleName.startsWith('packages')) {
+      moduleName = moduleName.replace('packages', 'node_modules/meteor');
+    }
+
+    return '/' + moduleName;
+  },
 
 };

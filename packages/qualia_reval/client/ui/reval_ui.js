@@ -13,6 +13,7 @@ Template.revalUI.onCreated(function() {
       tpl.revalFilePath = new ReactiveVar('');
 
       tpl.hoverTemplate = new ReactiveVar('');
+      tpl.windowWidth = new ReactiveVar($(window).width());
     },
 
     getOS() {
@@ -51,6 +52,10 @@ Template.revalUI.onCreated(function() {
         if (tpl.inspectMode.get() && !stillInspecting) {
           tpl.inspectMode.set(false);
         }
+      });
+
+      $(window).on('resize', e => {
+        tpl.windowWidth.set($(window).width());
       });
 
       $(document.body).on('keydown.reval', e => {
@@ -95,12 +100,6 @@ Template.revalUI.onCreated(function() {
           tpl.setEditorURL(editURL);
 
           e.preventDefault();
-          return false;
-        }
-      });
-
-      $(document).on('selectstart.reval', e => {
-        if (tpl.inspectMode.get()) {
           return false;
         }
       });
@@ -187,8 +186,13 @@ Template.revalUI.onCreated(function() {
     },
 
     bodyCSS() {
+      let css = '',
+          editorWidth = 700,
+          scale = Math.max(100 * (1 -  (editorWidth / tpl.windowWidth.get())), 40)
+      ;
+
       if (tpl.editorMode.get()) {
-        return `
+        css = `
           html {
             overflow: hidden;
             background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(34, 117, 79, 0.5));
@@ -204,8 +208,9 @@ Template.revalUI.onCreated(function() {
             right: 0px;
             top: 0px;
             bottom: 0px;
+            height: 100% !important;
 
-            transform        : scale(.5);
+            transform        : scale(${scale/100});
             transform-origin : 100% 0%;
             transition       : transform .2s ease;
           }
@@ -213,7 +218,7 @@ Template.revalUI.onCreated(function() {
         `;
       }
       else {
-        return `
+        css = `
           revalUI {
             display: none;
           }
@@ -224,6 +229,23 @@ Template.revalUI.onCreated(function() {
           }
         `;
       }
+
+      css += `
+        revalUI revalCode {
+          width: ${100 - scale}%;
+        }
+
+        revalUI editorPlaceholder {
+          width: ${100 - scale}%;
+        }
+
+        revalUI revalPanel {
+          width: ${scale}%;
+          height: ${100 - scale}%;
+        }
+      `;
+
+      return css;
     },
 
     insertToggle() {
@@ -300,7 +322,7 @@ Template.revalUI.events({
         patch = tpl.getPatches()[index],
         url = Reval.getEditURL({ filePath: patch.path })
     ;
-    tpl.setEditorURL(url)
+    tpl.setEditorURL(url);
   },
 
   'click savePatch'(e, tpl) {
@@ -310,6 +332,15 @@ Template.revalUI.events({
         patch = tpl.getPatches()[index]
     ;
     Reval.save([patch.path]);
+  },
+
+  'click revalClearAll'(e, tpl) {
+    e.preventDefault();
+    let patches = tpl.getPatches(),
+        paths = []
+    ;
+    paths = patches.map((patch) => patch.path);
+    Reval.clear(paths);
   },
 
   'click clearPatch'(e, tpl) {

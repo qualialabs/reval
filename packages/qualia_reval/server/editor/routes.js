@@ -28,7 +28,7 @@ Picker.route('/reval/edit', function(params, request, response) {
 });
 
 Picker.route('/reval/worker-proxy.js', function(params, request, response) {
-  response.writeHead(200, {'Content-Type': 'text/html'})
+  response.writeHead(200, {'Content-Type': 'text/javascript'})
   response.end(`
     self.MonacoEnvironment = {
         baseUrl: '${cdnURL}/'

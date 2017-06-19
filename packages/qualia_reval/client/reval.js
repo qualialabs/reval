@@ -113,7 +113,7 @@ Reval = {
       }
 
       _.extend(theWith.dataVar.curValue, newData);
-      theWith.dataVar.dep.changed()
+      theWith.dataVar.dep.changed();
     }, 200);
   },
 

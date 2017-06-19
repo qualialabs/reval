@@ -62,6 +62,7 @@ export default {
       let stats = fs.statSync(file.path),
           modified = new Date(stats.mtime.getTime());
 
+      modified.setSeconds(modified.getSeconds() + 5);
       if (modified > file.modified) {
         oldFiles.push(file.path);
         this.revalFiles.remove(file._id);

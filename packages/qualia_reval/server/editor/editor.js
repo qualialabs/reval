@@ -24,7 +24,7 @@ Editor.helpers({
   },
 
   safeCode() {
-    return Buffer.from(this.code).toString('base64');
+    return Buffer.from(encodeURIComponent(this.code)).toString('base64');
   },
 
 });

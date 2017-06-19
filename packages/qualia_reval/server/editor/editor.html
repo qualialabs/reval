@@ -22,9 +22,10 @@
 
       require(["vs/editor/editor.main"], function () {
         let editor = monaco.editor.create(document.getElementById("container"), {
-          value: atob('{{safeCode}}'),
+          value: decodeURIComponent(atob('{{safeCode}}')),
           language: '{{mode}}',
           theme: "vs-dark",
+          folding: true,
         });
 
         editor.onKeyUp(_.throttle(function() {
@@ -58,6 +59,10 @@
             type: "POST",
             url: '/reval/save',
           });
+        });
+
+        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_P, function() {
+          editor.getAction(["editor.action.quickCommand"])._run()
         });
 
         // window.bindKeyDown = function(f) {

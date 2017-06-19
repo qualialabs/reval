@@ -32,7 +32,6 @@ revalUI revalCode {
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 50%;
     height: 100%;
     border-style: none;
     opacity: 0.7;
@@ -46,7 +45,6 @@ revalUI iframe {
 
 revalUI editorPlaceholder {
     display: flex;
-    width: 50%;
     height: 100%;
     align-items: center;
     justify-content: center;
@@ -60,8 +58,6 @@ revalUI revalPanel {
     position: absolute;
     right: 0px;
     bottom: 0px;
-    width: 50%;
-    height: 50%;
     overflow: auto;
     border-style: none;
     color: white;
@@ -74,6 +70,9 @@ revalUI revalPanelHeader {
     background-color: rgba(0, 0, 130, 0.1);
 }
 
+revalUI revalPanelHeader revalClearAll {
+    background-color: #be2c21;
+}
 revalUI revalPanelHeader revalPublish {
     background-color: #1a5fce;
 }
@@ -103,6 +102,7 @@ revalUI revalPanel table {
 }
 revalUI revalPanel table td:last-child {
     white-space: nowrap;
+    width: 145px;
 }
 
 revalUI revalPanel tbody {
@@ -123,7 +123,7 @@ revalUI revalPanel tr:hover {
     background-color: rgba(142, 165, 131, 0.36);
 }
 
-revalUI savePatch, revalUI clearPatch, revalUI revalPublish {
+revalUI savePatch, revalUI clearPatch, revalUI revalPublish, revalUI revalClearAll {
     border: none;
     color: white;
     padding: 4px 16px;

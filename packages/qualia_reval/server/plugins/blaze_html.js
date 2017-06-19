@@ -7,6 +7,10 @@ Plugins.add('BlazeHTML', {
   locations: ['client'],
 
   compile({code}) {
+    if (code.includes('<body>')) {
+      console.warn("\x1b[91mReval\x1b[0m doesn't support reloading the <body> tag. Please move the code to a sub-template.")
+    }
+
     let result = '',
         regex = /<\s*template\s+name\s*=\s*['"](.*?)['"]\s*>([^]*?)<\s*\/\s*template\s*>/gmi,
         match
