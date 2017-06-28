@@ -39,7 +39,7 @@ atom.commands.add 'atom-text-editor',
     req.write(atom.workspace.getActiveTextEditor().getBuffer().getText())
     req.end() 
 ```
-In keymap.cson paste replacing "'alt-a'" whatever you desire:
+In keymap.cson paste- replacing "'alt-a'" with whatever you desire:
 ```
 'atom-text-editor':
   'alt-a': 'editor:qualia-reval'
