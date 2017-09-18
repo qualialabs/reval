@@ -132,6 +132,8 @@ export default {
     let files = this.revalFiles.find().fetch(),
         clearedFiles = [];
 
+    filePaths = filePaths.map(path => Utils.resolvePath(path));
+
     if (filePaths.length > 0) {
       files = files.filter(file => {
         return filePaths.includes(file.path);
