@@ -20,3 +20,7 @@ Go to File -> Settings -> Plugins -> Install from disk and select
 reval.jar. You will need to restart the IDE to see changes. By default
 the keymap shortcut is Ctrl + Alt + S, but you can change it on
 File -> Settings -> Keymap -> Main menu -> Code -> Update Blaze Code
+
+### Atom
+Install the `atom-reval` package with Atom's package browser or from
+[atom.io](https://atom.io/packages/atom-reval).
