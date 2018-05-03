@@ -7,13 +7,10 @@ Copy the code in spacemacs.el somewhere that Emacs will find it. If you have a
 If your server isn't located at localhost:3000, you can modify that
 reference on the `(concat ...` line.
 
-### Sublime
-Create a new plugin: Sublime -> Tools -> Developer -> New Plugin
-Copy sublime.py file into the new plugin and save it as `qualia_reval.py`
-Bind reloading to a key by placing something like this in your keymap:
-`{ "keys": ["ctrl+r"], "command": "qualia_reval"}`.
-If your server isn't located at localhost:3000, you can modify that
-reference on the `url = ...` line.
+### Sublime Text
+Install the `Meteor Reval` package with Sublime Text's [Package Control](https://packagecontrol.io/)
+or clone https://github.com/qualialabs/reval-sublime into your local Sublime
+`/Packages` directory.
 
 ### Webstorm (Intellij)
 Go to File -> Settings -> Plugins -> Install from disk and select
