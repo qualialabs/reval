@@ -33,15 +33,11 @@
     <revalPanel>
       <revalPanelHeader>
         <revalPublish>Publish</revalPublish>
+        <revalSaveAll>Save All</revalSaveAll>
         <revalClearAll>Clear All</revalClearAll>
         <revalPanelTitle>Active Patches</revalPanelTitle>
         <revalPanelSearch>
-          <input list="revalTemplates" placeholder="Find a template...">
-          <datalist id="revalTemplates">
-            {{#each template in $tpl.getTemplates}}
-              <option value="{{ template }}"></option>
-            {{/each}}
-          </datalist>
+          {{>revalAutocomplete choices=$tpl.getTemplates placeholder="Find a template..."}}
         </revalPanelSearch>
       </revalPanelHeader>
       <table>

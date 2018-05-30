@@ -21,12 +21,35 @@
       };
 
       require(["vs/editor/editor.main"], function () {
+
+        monaco.editor.defineTheme('revalTheme', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [{ background: '1e1e1e' }],
+            colors: {
+              'editor.lineHighlightBorder': '#00000000',
+              'editor.background': '#111111FF',
+              'scrollbar.shadow': '#00000000',
+              'editorIndentGuide.background': '#FFFFFF02',
+            }
+        });
+
         let editor = monaco.editor.create(document.getElementById("container"), {
           value: decodeURIComponent(atob('{{safeCode}}')),
           language: '{{mode}}',
-          theme: "vs-dark",
+          theme: "revalTheme",
           folding: true,
+          scrollBeyondLastLine: false,
+          lineNumbersMinChars: 3,
+          minimap: {
+            enabled: false
+          },
+          scrollbar: {
+            verticalScrollbarSize: 12
+          }
         });
+
+        editor.getModel().updateOptions({ tabSize: 2 })
 
         editor.onKeyUp(_.throttle(function() {
           if (localStorage.getItem('Reval.Live') !== 'false') {
@@ -37,7 +60,7 @@
               data: code,
             });
           }
-        }, 200));
+        }, 300));
 
         editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function() {
           var code = editor.getValue();
@@ -77,6 +100,6 @@
     </script>
   </head>
   <body>
-    <div id="container" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
+    <div id="container" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden"></div>
   </body>
 </html>

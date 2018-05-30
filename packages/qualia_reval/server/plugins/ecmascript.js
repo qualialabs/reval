@@ -9,7 +9,7 @@ Plugins.add('ECMAScript', {
     code = Package.ecmascript.ECMAScript.compileForShell(code);
 
     let moduleName = Utils.getModuleName(filePath);
-    code = `var module = RevalModules.getModule('${moduleName}'); var _module = module; \n\n${code}`;
+    code = `var module = RevalModules.getModule('${moduleName}'); module.importSync = module.importSync || module.import; var _module = module; var require = module.require; \n\n${code}`;
 
     return code;
   },

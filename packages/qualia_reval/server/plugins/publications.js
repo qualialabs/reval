@@ -15,7 +15,9 @@ Plugins.add('Publications', {
         delete Meteor.server.publish_handlers[name];
         return Meteor.publish.apply(this, arguments);
       }
-    ` + code;
+      ${code}
+      Object.values(Meteor.server.sessions).forEach(session => session.close());
+    `;
   },
 
 });

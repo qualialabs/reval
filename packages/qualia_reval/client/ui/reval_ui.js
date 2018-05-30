@@ -91,13 +91,7 @@ Template.revalUI.onCreated(function() {
 
       $(document).on('click.reval', e => {
         if (tpl.inspectMode.get()) {
-          let editURL = Reval.getEditURL({
-            templateName: tpl.updateHoverTemplate(),
-            sourceType: 'html',
-          });
-
-          tpl.editorMode.set(true);
-          tpl.setEditorURL(editURL);
+          tpl.loadTemplate(tpl.updateHoverTemplate());
 
           e.preventDefault();
           return false;
@@ -108,7 +102,9 @@ Template.revalUI.onCreated(function() {
         let codeEditor = tpl.$('revalUI iframe')[0].contentWindow;
 
         tpl.inspectMode.set(false);
-        tpl.revalFilePath.set(codeEditor.revalFilePath);
+        if (codeEditor.revalFilePath) {
+          tpl.revalFilePath.set(codeEditor.revalFilePath);
+        }
       });
     },
 
@@ -136,6 +132,15 @@ Template.revalUI.onCreated(function() {
 
       tpl.hoverTemplate.set(`Template.${template}`);
       return template;
+    },
+
+    loadTemplate(templateName) {
+      let editURL = Reval.getEditURL({
+        templateName,
+        sourceType: 'html',
+      });
+      tpl.editorMode.set(true);
+      tpl.setEditorURL(editURL);
     },
 
     lookupEditorLive() {
@@ -194,25 +199,25 @@ Template.revalUI.onCreated(function() {
       if (tpl.editorMode.get()) {
         css = `
           html {
-            overflow: hidden;
-            background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(34, 117, 79, 0.5));
+            overflow: hidden !important;
+            background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(34, 117, 79, 0.5)) !important;
           }
 
           head {
-            display: block;
+            display: block !important;
           }
 
           body {
-            position: absolute;
-            left: 0px;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
+            position: absolute !important;
+            left: 0px !important;
+            right: 0px !important;
+            top: 0px !important;
+            bottom: 0px !important;
             height: 100% !important;
 
-            transform        : scale(${scale/100});
-            transform-origin : 100% 0%;
-            transition       : transform .2s ease;
+            transform        : scale(${scale/100}) !important;
+            transform-origin : 100% 0% !important;
+            transition       : transform .2s ease !important;
           }
 
         `;
@@ -224,8 +229,8 @@ Template.revalUI.onCreated(function() {
           }
 
           body {
-            transform-origin : 100% 0%;
-            transition       : transform .2s ease;
+            transform-origin : 100% 0% !important;
+            transition       : transform .2s ease !important;
           }
         `;
       }
@@ -287,7 +292,7 @@ Template.revalUI.events({
   },
 
   'click revalPublish'() {
-    let newTab = window.open('', '_blank')
+    let newTab = window.open('', '_blank');
     Reval
       .publish()
       .then(url => {
@@ -332,6 +337,13 @@ Template.revalUI.events({
         patch = tpl.getPatches()[index]
     ;
     Reval.save([patch.path]);
+  },
+
+  'click revalSaveAll'(e, tpl) {
+    e.preventDefault();
+
+    let patches = tpl.getPatches().map((patch) => patch.path);
+    Reval.save(patches);
   },
 
   'click revalClearAll'(e, tpl) {

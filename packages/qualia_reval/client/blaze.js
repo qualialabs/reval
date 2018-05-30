@@ -14,13 +14,13 @@ Blaze._createView = function(view, parentView, forExpansion) {
   return createView.call(this, view, parentView, forExpansion);
 };
 
-let getRoot = function(elem) {
+let getRoot = function(elem, baseView) {
   let view = Blaze.getView(elem);
   if (!elem) {
     return;
   }
 
-  while (view && view.parentView) {
+  while (view && view.parentView && view !== baseView) {
     view = view.originalParentView || view.parentView;
   }
 
@@ -28,10 +28,13 @@ let getRoot = function(elem) {
 };
 
 let getRoots = function(base) {
-  let roots = new Set();
+  let roots = new Set(),
+      baseElem = $(base)[0],
+      baseView = Blaze.getView(baseElem)
+  ;
 
   $(base + ' *').each((i, e) => {
-    let root = getRoot(e);
+    let root = getRoot(e, baseView);
     if (root) {
       roots.add(root);
     }

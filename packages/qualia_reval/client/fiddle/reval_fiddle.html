@@ -1,0 +1,17 @@
+<template name="revalFiddle">
+  <revalFiddle>
+    <column>
+      {{>revalFiddleFrame templateName=templateName extension="html" allFiles=$tpl.allFiles}}
+      <resize data-direction="vertical"></resize>
+      {{>revalFiddleFrame templateName=templateName extension="js" allFiles=$tpl.allFiles}}
+    </column>
+    <resize data-direction="horizontal"></resize>
+    <column>
+      {{#if filePath}}
+        {{>revalFiddleFrame filePath=filePath server=true allFiles=$tpl.allFiles}}
+        <resize data-direction="vertical"></resize>
+      {{/if}}
+      {{>revalFiddleView}}
+    </column>
+  </revalFiddle>
+</template>

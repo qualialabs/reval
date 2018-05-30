@@ -1,0 +1,14 @@
+<template name="revalFiddleFrame">
+  <revalFiddleFrame>
+    {{#if $tpl.getExtension}}
+      <codeLabel class="{{$tpl.getExtension}}">
+        {{$tpl.getExtension}}
+      </codeLabel>
+    {{/if}}
+    {{#if $tpl.showFrame }}
+      <iframe src="{{ $tpl.frameURL.get }}"></iframe>
+    {{else if $tpl.showSearch }}
+      {{>revalAutocomplete $tpl.searchOptions }}
+    {{/if}}
+  </revalFiddleFrame>
+</template>

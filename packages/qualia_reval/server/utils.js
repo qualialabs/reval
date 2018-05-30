@@ -16,11 +16,21 @@ let parsePath = function(filePath) {
   ;
 
   if (!isPackage) {
-    return {
+    let parsed = {
       relativePath,
       clientPath: path.join(buildPrefix, 'web.browser', 'app', 'app.js'),
       serverPath: path.join(buildPrefix, 'server', 'app', 'app.js'),
     };
+
+    if (relativePath.startsWith('client')) {
+      delete parsed.serverPath;
+    }
+
+    if (relativePath.startsWith('server')) {
+      delete parsed.clientPath;
+    }
+
+    return parsed;
   }
 
   let packageJSPath = rootDir + path.sep + relativePath.split(path.sep).slice(0, 2).join(path.sep) + path.sep + 'package.js',
@@ -44,7 +54,6 @@ let parsePath = function(filePath) {
   }
 
   return parsed;
-
 };
 
 export default {
@@ -72,10 +81,12 @@ export default {
 
   findFile(filePath) {
     let parsed = parsePath(filePath),
-        locations = {}
+        locations = {
+          client: false,
+          server: false,
+        }
     ;
 
-    console.log(parsed);
     if (parsed.clientPath && fs.existsSync(parsed.clientPath)) {
       let clientSrc = fs.readFileSync(parsed.clientPath, 'utf8');
       locations.client = clientSrc.includes(parsed.relativePath) || clientSrc.includes(parsed.escapedRelativePath);
@@ -103,11 +114,8 @@ export default {
   },
 
   normalizePath(filePath) {
-    let isWin = /^win/.test(process.platform);
-    return isWin
-      ? filePath.replace(/\\/g,"/")
-      : filePath
-    ;
+    filePath = filePath.replace(/\\/g, '/');
+    return path.normalize(filePath);
   },
 
   getData(request) {
@@ -142,16 +150,24 @@ export default {
   },
 
   getModuleName(filePath) {
-    let moduleName = filePath
-        .replace(rootDir + path.sep, '')
-        .replace('_', ':')
+    let moduleName = filePath.replace(path.normalize(rootDir + path.sep), ''),
+        parts = moduleName.split('/')
     ;
-
-    if (moduleName.startsWith('packages')) {
-      moduleName = moduleName.replace('packages', 'node_modules/meteor');
+    if (parts[0] === 'packages') {
+      moduleName = 'node_modules/meteor/' + parsePath(filePath).relativePath;
     }
-
     return '/' + moduleName;
+  },
+
+  findAllFiles() {
+    console.log(rootDir);
+    let command = `cd ../../../../.. && find . -not \\( -path '*/\\.*' -o -path '*/node_modules*' -prune \\) \\( -name '*\\.js' -o -name '*\\.html' -o -name '*\\.css' \\)`;
+    return childProcess
+      .execSync(command)
+      .toString()
+      .split('\n')
+      .map(path => path.slice(2))
+    ;
   },
 
 };

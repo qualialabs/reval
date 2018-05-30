@@ -1,0 +1,11 @@
+<template name="revalFiddleView">
+  <revalFiddleView>
+    {{#if $tpl.templateWrapper }}
+      {{#Template.dynamic template=$tpl.templateWrapper data=$tpl.templateData }}
+        {{> Template.dynamic template=$tpl.templateName }}
+      {{/Template.dynamic}}
+    {{else}}
+      {{> Template.dynamic template=$tpl.templateName data=$tpl.templateData }}
+    {{/if}}
+  </revalFiddleView>
+</template>

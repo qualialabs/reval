@@ -1,0 +1,35 @@
+revalAutocomplete {
+    position: absolute;
+    text-align: center;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+revalAutocomplete input {
+    width: 100%;
+    max-width: 500px;
+    outline: 0;
+    padding: 10px;
+    display: inline-block;
+    border: 2px solid #ffffff52;
+    box-shadow: inset 0 1px 3px #00000066;
+    border-radius: 5px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #151c229e;
+    color: #FFFFFF;
+}
+revalAutocomplete input::-webkit-input-placeholder {
+  color: #CCCCCC;
+}
+
+
+revalAutocomplete input:focus {
+   border-color: #FFFFFF;
+}
+revalAutocomplete input:focus::-webkit-input-placeholder {
+  color: #EEEEEE;
+}

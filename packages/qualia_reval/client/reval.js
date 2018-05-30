@@ -20,11 +20,13 @@ Reval = {
   },
 
   editURL: new ReactiveVar(''),
+  baseElem: '',
+  toggleConnection: false,
 
   renderUI() {
     Meteor.startup(() => {
       let view = Blaze.render(Template.revalUI, $('head')[0]);
-      window.theView = view;
+      this.UI = view._templateInstance;
     });
   },
 
@@ -50,16 +52,20 @@ Reval = {
     let reload = revalFile => {
       if (revalFile.client) {
         try {
-          eval(revalFile.clientEval);
+          Function(revalFile.clientEval)();
+          if (this.toggleConnection) {
+            Meteor.connection.disconnect();
+            Meteor.connection.reconnect();
+          }
         }
         catch(e) {
           console.error(e);
         }
 
-        let baseElem = revalFile.path.includes('qualia_reval')
+        let baseElem = this.baseElem || (revalFile.path.includes('qualia_reval')
             ? 'html'
             : 'body'
-        ;
+        );
         this.reloadPage(baseElem);
       }
     };
@@ -83,6 +89,16 @@ Reval = {
     }
     else {
       return `/reval/edit?templateName=${templateName}&sourceType=${sourceType}`;
+    }
+  },
+
+  getReadURL({templateName, sourceType, filePath}) {
+    if (filePath) {
+      sourceType = filePath.split('.').pop();
+      return `/reval/read?filePath=${filePath}&sourceType=${sourceType}`;
+    }
+    else {
+      return `/reval/read?templateName=${templateName}&sourceType=${sourceType}`;
     }
   },
 

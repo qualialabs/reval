@@ -1,0 +1,128 @@
+revalFiddle {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    overflow: hidden;
+    font-family: Lato, Arial;
+}
+revalFiddle revalFiddleFrame {
+    position: relative;
+    display: block;
+    height: 50vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(/packages/qualia_reval/assets/blue-polygons.jpg);
+}
+revalFiddle revalFiddleFrame:only-child {
+    height: 100vh;
+}
+
+revalFiddle column {
+    position: relative;
+    width: 50%;
+}
+revalFiddle column:last-child {
+    transition: 1s ease box-shadow;
+    box-shadow: -1px 0px 0px 0px #393939
+}
+revalFiddle revalFiddleFrame codeLabel {
+    position: absolute;
+    top: 0px;
+    right: 12px;
+    z-index: 100;
+    background-color: #425246;
+    color: #FFFFFF;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 0px 0px 0px 5px;
+}
+revalFiddle revalFiddleFrame codeLabel.js {
+    background-color: #2c3c44;
+}
+revalFiddle revalFiddleFrame codeLabel.js.server {
+    background-color: #564141;
+}
+revalFiddle revalFiddleFrame:last-child {
+    transition: 1s ease box-shadow;
+    box-shadow: 0px -1px 0px 0px #393939
+}
+
+revalFiddle revalFiddleFrame iframe {
+    padding-top: 5px;
+    background-color: #111111;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-style: none;
+    width: 100%;
+    height: 100%;
+}
+
+revalFiddle revalFiddleView {
+    resize: vertical;
+    overflow: auto;
+    flex: 1;
+    padding: 1.5em;
+}
+
+/* Resizing */
+revalFiddle resize {
+    z-index: 2;
+}
+revalFiddle column + resize {
+    position: relative;
+    width: 10px;
+    height: 100%;
+    margin-left: -4px;
+    left: auto;
+    cursor: ew-resize;
+    margin-right: -6px;
+}
+revalFiddle revalFiddleFrame + resize {
+    position: absolute;
+    cursor: ns-resize;
+    width: 100%;
+    height: 15px;
+    margin-top: -7px;
+}
+revalFiddle resize:hover + column {
+    box-shadow: -1px 0px 0px 0px #666666;
+}
+revalFiddle resize:hover + revalFiddleFrame {
+    box-shadow: 0px -1px 0px 0px #666666;
+}
+body.resize revalFiddleFrame {
+    pointer-events: none;
+}
+
+/* Autocomplete */
+revalFiddle ~ .autocomplete-suggestions {
+    text-align: left;
+    cursor: default;
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-radius: 5px;
+    padding: 3px 0px;
+    background: #fff;
+    margin-top: 4px;
+    box-shadow: 1px 3px 35px rgba(0, 0, 0, 0.35);
+    position: absolute;
+    display: none;
+    z-index: 9999;
+    max-height: 184px;
+    overflow: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+revalFiddle ~ .autocomplete-suggestion {
+    position: relative;
+    padding: 0px 13px;
+    line-height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1em;
+    color: #333;
+    border-top: 1px solid #EEE;
+}

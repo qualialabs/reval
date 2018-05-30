@@ -59,6 +59,7 @@ revalUI revalPanel {
     right: 0px;
     bottom: 0px;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     border-style: none;
     color: white;
 }
@@ -73,6 +74,9 @@ revalUI revalPanelHeader {
 revalUI revalPanelHeader revalClearAll {
     background-color: #be2c21;
 }
+revalUI revalPanelHeader revalSaveAll {
+    background-color: #2e8631;
+}
 revalUI revalPanelHeader revalPublish {
     background-color: #1a5fce;
 }
@@ -86,14 +90,7 @@ revalUI revalPanelHeader revalPanelSearch {
     text-align: right;
     margin-right: 0.5em;
     opacity: 0.8;
-}
-
-revalUI revalPanelHeader input {
-    color: black;
-}
-
-revalUI revalPanelHeader revalPanelSearch datalist {
-    display: none;
+    width: 160px;
 }
 
 revalUI revalPanel table {
@@ -123,7 +120,7 @@ revalUI revalPanel tr:hover {
     background-color: rgba(142, 165, 131, 0.36);
 }
 
-revalUI savePatch, revalUI clearPatch, revalUI revalPublish, revalUI revalClearAll {
+revalUI savePatch, revalUI clearPatch, revalUI revalPublish, revalUI revalSaveAll, revalUI revalClearAll {
     border: none;
     color: white;
     padding: 4px 16px;

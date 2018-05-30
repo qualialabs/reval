@@ -132,6 +132,8 @@ export default {
     let files = this.revalFiles.find().fetch(),
         clearedFiles = [];
 
+    filePaths = filePaths.map(path => Utils.resolvePath(path));
+
     if (filePaths.length > 0) {
       files = files.filter(file => {
         return filePaths.includes(file.path);
@@ -189,7 +191,7 @@ export default {
         }
     ;
     if (extension === 'js') {
-      _.extend(locations, Utils.findFile(filePath));
+      locations = Utils.findFile(filePath);
     }
 
     // Maybe run code on client
@@ -228,15 +230,28 @@ export default {
   },
 
   evalServer(path, code) {
-    this.revalFiles.update({path}, {
-      $set: {
-        server: true,
-        serverEval: code,
-        cleared: false,
-      }
-    });
-    let script = new vm.Script(code, {name: path});
-    script.runInThisContext();
+    try {
+      let script = new vm.Script(code, {name: path});
+      script.runInThisContext();
+      this.revalFiles.update({path}, {
+        $set: {
+          server: true,
+          serverEval: code,
+          cleared: false,
+        }
+      });
+    }
+    catch(e) {
+      let error = e.stack || e || `Failed to eval ${path}`,
+          errorString = error.toString(),
+          formattedError = errorString
+            .split('\n')
+          .map(line => `\x1b[31m    ${line}\x1b[0m`)
+            .join('\n')
+      ;
+      console.log(`\x1b[32mReval\x1b[0m failed to patch ${path} on the server:`);
+      console.log(formattedError);
+    }
   },
 
   addHook(type, callback) {
