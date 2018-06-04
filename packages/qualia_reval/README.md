@@ -2,6 +2,8 @@
 
 [Click here for a detailed write-up](https://eng.qualia.com/reval-interactive-meteor-dev-c24cf3c52304)
 
+See [this repo](https://github.com/qualialabs/meteor-night-demo) for a fun example of the Reval Fiddle mode. This is not yet documented in this repo, but is a huge new feature. I hope to update this README soon.
+
 This package allows you to instantly reload files, via either an in-browser editor or an editor plugin. It works with Blaze, Jade, CSS, and arbitrary Javascript, both client-side and server-side. It also allows for live, collaborative code editing via an integration with [Ngrok](https://ngrok.com).
 
 [![Reval Demo](https://cloud.githubusercontent.com/assets/247408/26030584/59575586-380c-11e7-94ec-11f7769b197a.png)](http://www.youtube.com/watch?v=16QifLSZwLo)
