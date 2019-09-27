@@ -32,9 +32,10 @@ export default {
 
   watchClientReload() {
     // Hack to get access to the autoupdate collection
-    let dummy = new Mongo.Collection('reval.dummy', {connection: null}),
-        ClientVersions = dummy._driver.noConnCollections['meteor_autoupdate_clientVersions']
-    ;
+    let dummy = new Mongo.Collection('reval.dummy', {connection: null});
+    dummy._driver.open('meteor_autoupdate_clientVersions');
+
+    let ClientVersions = dummy._driver.noConnCollections['meteor_autoupdate_clientVersions']
 
     ClientVersions.find({_id: 'version'}).observe({
       changed: () => {
