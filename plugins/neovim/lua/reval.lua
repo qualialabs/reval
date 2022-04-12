@@ -23,12 +23,7 @@ function M.reval(host)
   local txt = buftxt()
   local url = "http://" .. host .. "/reval/reload?filePath=" .. vim.fn.expand('%:p')
   print(url)
-  curl.post(url, {
-    raw_body = txt,
-    callback = vim.schedule_wrap(function()
-      print("reval'd '" .. vim.fn.expand('%'), "'")
-    end)
-  })
+  curl.post(url, { raw_body = txt })
 end
 
 return M
