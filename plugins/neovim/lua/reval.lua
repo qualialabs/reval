@@ -32,7 +32,7 @@ function M.reval(host)
   local file_relative_to_repo_root = file:make_relative(repo_root)
   local file_relative_to_dev = '/src/qualia/' .. file_relative_to_repo_root
 
-  local url = "http://" .. host .. "/reval/reload?filePath=/" .. file_relative_to_dev
+  local url = "http://" .. host .. "/reval/reload?filePath=" .. file_relative_to_dev
   curl.post(url, {
     raw_body = buftxt(),
     callback = vim.schedule_wrap(function(result)
