@@ -19,10 +19,11 @@ end
 local function find_up(path, file_to_find)
   local current_directory = Path:new(path)
   while true do
-    current_directory = current_directory:parent()
-    if current_directory == nil then
+    local parent_directory = current_directory:parent()
+    if tostring(parent_directory) == tostring(current_directory) then
       break
     end
+    current_directory = parent_directory
 
     local potential_file = current_directory:joinpath(file_to_find)
     if potential_file:exists() then
