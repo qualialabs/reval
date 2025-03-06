@@ -13,6 +13,7 @@ or clone https://github.com/qualialabs/reval-sublime into your local Sublime
 `/Packages` directory.
 
 ### Webstorm (Intellij)
+**NOTE: this is probably broken, and you're out of luck**
 Go to File -> Settings -> Plugins -> Install from disk and select
 reval.jar. You will need to restart the IDE to see changes. By default
 the keymap shortcut is Ctrl + Alt + S, but you can change it on
